@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable, throwError } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, filter, map, tap } from 'rxjs/operators';
 import { combineLatest } from 'rxjs';
 
 import { Product } from './product';

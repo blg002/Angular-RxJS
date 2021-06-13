@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { BehaviorSubject, combineLatest, EMPTY } from 'rxjs';
+import { BehaviorSubject, combineLatest, EMPTY, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ProductCategoryService } from '../product-categories/product-category.service';
 
@@ -14,7 +14,8 @@ import { ProductService } from './product.service';
 })
 export class ProductListComponent {
   pageTitle = 'Product List';
-  errorMessage = '';
+  private errorMessageSubject = new Subject<string>();
+  errorMessageAction$ = this.errorMessageSubject.asObservable();
 
   private categorySelectedSubject = new BehaviorSubject<number>(0);
   categorySelectedAction$ = this.categorySelectedSubject.asObservable();
@@ -30,8 +31,7 @@ export class ProductListComponent {
         )
       ),
       catchError(err => {
-        this.errorMessage = err;
-        // return of([]);
+        this.errorMessageSubject.next(err);
         return EMPTY;
       })
     );
@@ -39,7 +39,7 @@ export class ProductListComponent {
   categories$ = this.productCategoryService.productCategories$
     .pipe(
       catchError(err => {
-        this.errorMessage = err;
+        this.errorMessageSubject.next(err);
         return EMPTY;
       })
     );

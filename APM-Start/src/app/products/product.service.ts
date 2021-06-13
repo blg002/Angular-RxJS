@@ -27,7 +27,6 @@ export class ProductService {
     this.products$,
     this.productCategoryService.productCategories$,
   ]).pipe(
-    tap(data => console.log(data)),
     map(([products, categories]) =>
       products.map(product => ({
         ...product,

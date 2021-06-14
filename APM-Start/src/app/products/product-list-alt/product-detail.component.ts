@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { EMPTY, Subject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
+import { SupplierService } from 'src/app/suppliers/supplier.service';
 import { ProductService } from '../product.service';
 
 @Component({

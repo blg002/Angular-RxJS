@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { EMPTY, Subject } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
+import { ProductCategory } from 'src/app/product-categories/product-category';
 
 import { SupplierService } from 'src/app/suppliers/supplier.service';
 import { ProductService } from '../product.service';
@@ -22,6 +23,13 @@ export class ProductDetailComponent {
         return EMPTY;
       })
     )
+
+  pageTitle$ = this.product$
+    .pipe(
+      map((p: Product) =>
+        p ? `Product Detail for: ${p.productName}` : null
+      )
+    );
 
   productSuppliers$ = this.productService.selectedProductSuppliers$
     .pipe(
